@@ -90,6 +90,8 @@ namespace SportsStore.Models
                         Price = 1200
                     }
                 );
+
+                context.SaveChanges();
             }
         }
     }
