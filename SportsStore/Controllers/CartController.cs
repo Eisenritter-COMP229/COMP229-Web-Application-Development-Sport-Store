@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
+using SportsStore.Infrastructure;
 
 namespace SportsStore.Controllers
 {
@@ -46,14 +47,15 @@ namespace SportsStore.Controllers
             return RedirectToAction("Index", new { returnUrl });
         }
 
-        private void SaveCart()
+        private void SaveCart(Cart cart)
         {
-
+            HttpContext.Session.SetJson("Cart", cart);
         }
 
-        private void GetCart()
+        private Cart GetCart()
         {
-
+            Cart cart = HttpContext.Session.GetJson<Cart>("Cart") ?? new Cart();
+            return cart;
         }
     }
 }
