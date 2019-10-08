@@ -21,7 +21,7 @@ namespace SportsStore.Controllers
             View(new ProductsListViewModel
             {
                 Products = repository.Products
-                    .Where(p=>category==null||p.Category==category)
+                    .Where(p=>category==null || p.Category == category)
                     .OrderBy(P => P.ProductID)
                     .Skip((productPage - 1) * PageSize)
                     .Take(PageSize),
@@ -29,7 +29,9 @@ namespace SportsStore.Controllers
                 {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = repository.Products.Count()
+                    TotalItems = repository.Products
+                    .Where(p=> category==null || p.Category==category)
+                    .Count()
                 },
                 CurrentCategory = category
             });

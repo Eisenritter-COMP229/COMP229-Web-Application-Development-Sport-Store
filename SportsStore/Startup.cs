@@ -43,7 +43,7 @@ namespace SportsStore
             {
                 routes.MapRoute(
                     name: null,
-                    template: "category/Page{productPage:int}",
+                    template: "{category}/Page{productPage:int}",
                     defaults: new { Controller = "Product", action = "List" }
                     );
 
