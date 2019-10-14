@@ -9,7 +9,7 @@ namespace SportsStore.Controllers
 {
     public class OrderController : Controller
     {
-        public ViewResult Checkout() => View(new Order())
+        public ViewResult Checkout() => View(new Order());
         
     }
 }
