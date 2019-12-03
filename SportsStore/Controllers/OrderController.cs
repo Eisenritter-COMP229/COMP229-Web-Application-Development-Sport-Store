@@ -14,6 +14,32 @@ namespace SportsStore.Controllers
             repository = repoService;
             cart = cartService;
         }
+
+        //List the orders to be shipped
+        public ViewResult List() => View(repository.Orders.Where(o => !o.Shipped));
+        
+        
+        /// <summary>
+        /// Best practice, do not return view, but redirects user to another view. MVC Standard
+        /// Redirect to Action whenever using HTTPPost
+        /// </summary>
+        /// <param name="orderID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult MarkShipped(int orderID)
+        {
+            Order order = repository.Orders.FirstOrDefault(o => o.OrderID == orderID);
+
+            if (order != null)
+            {
+                order.Shipped = true;
+                // Leveraging the method
+                repository.SaveOrder(order);
+            }
+
+            return RedirectToAction(nameof(List)); // Refresh the view
+        }
+
         public ViewResult Checkout() => View(new Order());
         [HttpPost]
         public IActionResult Checkout(Order order)
