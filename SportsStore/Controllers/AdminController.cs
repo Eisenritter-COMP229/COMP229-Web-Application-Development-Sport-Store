@@ -17,5 +17,8 @@ namespace SportsStore.Controllers
         }
 
         public ViewResult Index() => View(repository.Products);
+
+        public ViewResult Edit(int productId) =>
+            View(repository.Products.FirstOrDefault(p => p.ProductID == productId)); //Returns the first object in the collection that matches the query, if no match, null returned
     }
 }
