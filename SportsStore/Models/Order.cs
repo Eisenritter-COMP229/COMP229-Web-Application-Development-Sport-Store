@@ -15,6 +15,10 @@ namespace SportsStore.Models
         [BindNever]
         public ICollection<CartLine> Lines { get; set; }
 
+        // Not binding any control in the UI to this field
+        [BindNever]
+        public bool Shipped { get; set; }
+
         [Required(ErrorMessage = "Please enter a name")]
         public string Name { get; set; }
 
