@@ -35,6 +35,8 @@ namespace SportsStore.Models
                     productEntry.Category = product.Category;
                 }
             }
+
+            context.SaveChanges();
         }
     }
 }

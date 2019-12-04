@@ -20,5 +20,20 @@ namespace SportsStore.Controllers
 
         public ViewResult Edit(int productId) =>
             View(repository.Products.FirstOrDefault(p => p.ProductID == productId)); //Returns the first object in the collection that matches the query, if no match, null returned
+
+        [HttpPost]
+        public IActionResult Edit(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.SaveProduct(product);
+                TempData["message"] = $"{product.Name} has been saved!";
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(product);
+            }
+        }
     }
 }
