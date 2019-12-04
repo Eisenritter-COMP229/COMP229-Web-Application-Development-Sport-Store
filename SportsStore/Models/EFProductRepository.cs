@@ -38,5 +38,18 @@ namespace SportsStore.Models
 
             context.SaveChanges();
         }
+
+        public Product DeleteProduct(int productID)
+        {
+            Product productEntry = context.Products
+                .FirstOrDefault(p => p.ProductID == productID);
+            if (productEntry != null)
+            {
+                context.Products.Remove(productEntry);
+                context.SaveChanges();
+            }
+
+            return productEntry;
+        }
     }
 }
