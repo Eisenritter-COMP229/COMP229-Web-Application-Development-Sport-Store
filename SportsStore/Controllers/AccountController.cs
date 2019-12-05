@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models.ViewModels;
+using System.Threading.Tasks;
 
 namespace SportsStore.Controllers
 {
@@ -28,6 +25,29 @@ namespace SportsStore.Controllers
             {
                 ReturnUrl = returnUrl
             });
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginModel loginModel)
+        {
+            if (ModelState.IsValid)
+            {
+                IdentityUser user = await userManager.FindByNameAsync(loginModel.Name);
+
+                if(user != null)
+                {
+                    if((await signInManager.PasswordSignInAsync(user, 
+                        loginModel.Password, false, false)).Succeeded)
+                    {
+                        return Redirect(loginModel.ReturnUrl ?? "/Admin/Index");
+                    }
+                }
+            }
+
+            ModelState.AddModelError("", "Invalid name or password");
+            return View(loginModel);
         }
     }
 }
