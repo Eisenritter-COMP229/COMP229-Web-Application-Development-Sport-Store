@@ -16,7 +16,7 @@ namespace SportsStore.Controllers
             cart = cartService;
         }
 
-        [Authorize]
+        [Authorize(Roles ="Admin,Manager")]
         //List the orders to be shipped
         public ViewResult List() => View(repository.Orders.Where(o => !o.Shipped));
         
@@ -28,7 +28,7 @@ namespace SportsStore.Controllers
         /// <param name="orderID"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         public IActionResult MarkShipped(int orderID)
         {
             Order order = repository.Orders.FirstOrDefault(o => o.OrderID == orderID);

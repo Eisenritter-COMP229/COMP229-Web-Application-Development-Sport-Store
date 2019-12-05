@@ -21,12 +21,14 @@
                 <th>Product</th>
                 <th>Quantity</th>
                 <td>
-                    <form asp-action="MarkShipped" method="post">
-                        <input type="hidden" name="orderID" value="@o.OrderID" />
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            Ship
-                        </button>
-                    </form>
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin")) { 
+                        <form asp-action="MarkShipped" method="post">
+                            <input type="hidden" name="orderID" value="@o.OrderID"/>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Ship
+                            </button>
+                        </form>
+                    }
                 </td>
             </tr>
             @foreach (CartLine line in o.Lines)
